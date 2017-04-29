@@ -10,6 +10,9 @@ def hi(message):
     message.react('+1')
 
 @respond_to('temperature', re.IGNORECASE)
-def love(message):
-    message.reply('Temperature is %s' % (temphumidity.getTemperature()))
-    
+def temperature(message):
+    message.reply('Temperature is %sC' % (temphumidity.getTemperature()))
+
+@respond_to('humidity', re.IGNORECASE)
+def humidity(message):
+    message.reply('Humidity is %s%%' % (temphumidity.getHumidity()))
