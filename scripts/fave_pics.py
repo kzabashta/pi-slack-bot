@@ -91,14 +91,17 @@ def get_today_images():
 
 def stitch_animation():
     images = []
-    for filename in glob.glob("*.jpg"):
+    for filename in sorted(glob.glob("*.jpg")):
         images.append(imageio.imread(filename))
     kargs = {'duration': 30}
-    imageio.mimsave('movie.gif', images, duration=1)
+    imageio.mimsave('movie.gif', images, duration=0.2)
+    os.remove("*.jpg")
+    client.api_call('files.upload', channels="#general", filename='movie.gif', title="Motions for today", file=open('movie.gif', 'rb'))
 
 
 if __name__ == '__main__':
     # download_fave_pics()
-    # stitch_animation()
-
     get_today_images()
+    stitch_animation()
+
+    
