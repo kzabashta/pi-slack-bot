@@ -15,8 +15,8 @@ SLACK_TOKEN = os.environ['USER_SLACK_API_TOKEN']
 DROPBOX_TOKEN = os.environ['DROPBOX_API_TOKEN']
 IMAGES_DIR = 'images'
 GIF_NAME = 'movements.gif'
-CHUNK_SIZE = int(1 * 1024 * 1024)
-RETRY_COUNT = 10
+CHUNK_SIZE = int(0.1 * 1024 * 1024)
+RETRY_COUNT = 15
 
 slack_client = SlackClient(SLACK_TOKEN)
 dbox_client = dropbox.Dropbox(DROPBOX_TOKEN)
@@ -113,6 +113,7 @@ def upload_to_dropbox():
             break
         except:
             try_count = try_count + 1
+            t.sleep(5)
             print ('Attempting try %i out of %i' % (try_count, RETRY_COUNT))
 
     cursor = dropbox.files.UploadSessionCursor(session_id=upload_session_start_result.session_id,
@@ -134,6 +135,7 @@ def upload_to_dropbox():
                     break
                 except:
                     try_count = try_count + 1
+                    t.sleep(5)
                     print ('Attempting try %i out of %i' % (try_count, RETRY_COUNT))
             cursor.offset = f.tell()
             print file_size - f.tell()
@@ -153,5 +155,5 @@ if __name__ == '__main__':
         print("Creating a gif...")
         stitch_animation()
         print("Uploading to dropbox...")
-        upload_to_dropbox()
+        #upload_to_dropbox()
         t.sleep(86400)
