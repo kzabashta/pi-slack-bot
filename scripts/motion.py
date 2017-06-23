@@ -20,7 +20,6 @@ client = SlackClient(slack_token)
 def upload_photo():
        client.api_call('files.upload', channels="#motion", filename='snapshot.jpg', title="Motion detected", file=open('/var/lib/motion/lastsnap.jpg', 'rb'))
        os.system('sudo rm -rf /var/lib/motion/*')
-       return link
 
 def save_photo():
        os.system('curl http://localhost:8080/0/action/snapshot')
