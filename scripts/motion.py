@@ -12,8 +12,6 @@ GPIO.setup(23, GPIO.IN)
 GPIO.setup(21, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
 
-from slackclient import SlackClient
-
 slack_token = os.environ["SLACK_API_TOKEN"]
 client = SlackClient(slack_token)
 
